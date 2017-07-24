@@ -1,6 +1,6 @@
 project(pugixml)
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.12)
 
 option(BUILD_SHARED_LIBS "Build shared instead of static library" OFF)
 option(BUILD_TESTS "Build tests" OFF)
@@ -54,6 +54,10 @@ if(BUILD_PKGCONFIG)
 	# Install library into its own directory under LIBDIR
 	set(INSTALL_SUFFIX /pugixml-${PUGIXML_VERSION_STRING})
 endif()
+
+target_include_directories(pugixml PUBLIC
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/src>
+	$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}${INSTALL_SUFFIX}>)
 
 install(TARGETS pugixml EXPORT pugixml-config
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}${INSTALL_SUFFIX}
